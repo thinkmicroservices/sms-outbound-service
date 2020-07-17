@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  
+info:
+  app:
+    name: SMS Outbound Service
+    description: Provides an integration point to an outbound SMS provider
+    version: 1.0.0
+
+
+management:
+  endpoints:
+    metrics:
+      sensitive: false
+    web:
+      exposure:
+        include: info,health,prometheus
+        
+management.metrics.tags.application: ${spring.application.name} 
+        
+        
+        
+        
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: think
+    password: microservices
+ 
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: SmsMessages
+          group: smsMessageGroup
+          
+  profiles:
+    active: dev, swagger, twilio
